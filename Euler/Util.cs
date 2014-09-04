@@ -42,7 +42,6 @@
             return factors;
         }
 
-
         private static long PollardSequence(long x)
         {
             return (x % int.MaxValue) * (x % int.MaxValue) + 1;
@@ -178,6 +177,7 @@
                 }
             }
         }
+        
         private static int SumOfProperDivisor(int i)
         {
             return SumOfDivisor(i) - i;
