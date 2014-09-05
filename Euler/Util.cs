@@ -191,9 +191,14 @@
 
         private static int Power(int x, int y)
         {
+            return Power<int>(x, y, 1, (p, q) => p * q);
+        }
+
+        private static T Power<T>(T x, int y, T one, Func<T, T, T> multiply)
+        {
             if (y == 0)
             {
-                return 1;
+                return one;
             }
             else if (y == 1)
             {
@@ -201,10 +206,9 @@
             }
             else
             {
-                int r = Power(x, y / 2);
-                return y % 2 == 0 ? r * r : r * r * x;
+                T r = Power(x, y / 2, one, multiply);
+                return y % 2 == 0 ? multiply(r, r) : multiply(multiply(r, r), x);
             }
-
         }
     }
 }
