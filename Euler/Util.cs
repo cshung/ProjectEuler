@@ -3,11 +3,23 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
+    using System.Reflection;
+    using System.Text;
     using System.Threading.Tasks;
 
     internal static partial class Program
     {
+        public static string ReadResourceAsString(string resourceName)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                Assembly.GetEntryAssembly().GetManifestResourceStream(resourceName).CopyTo(ms);
+                return Encoding.ASCII.GetString(ms.ToArray());
+            }
+        }
+
         // Pollard's rho algorithm for factoring (note that it does not factor 2^n)
         public static List<long> PollardFactor(long n)
         {
