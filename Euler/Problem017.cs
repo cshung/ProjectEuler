@@ -11,7 +11,7 @@
             Console.WriteLine(Enumerable.Range(1, 1000).Select(i => ToEnglishString(i).Replace(" ", string.Empty).Length).Aggregate((x, y) => x + y));
         }
 
-        static string ToEnglishString(int i)
+        private static string ToEnglishString(int i)
         {
             string ONE = "one";
             string TWO = "two";

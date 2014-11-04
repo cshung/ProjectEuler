@@ -222,5 +222,52 @@
                 return y % 2 == 0 ? multiply(r, r) : multiply(multiply(r, r), x);
             }
         }
+
+        public static IEnumerable<IEnumerable<T>> Permutations<T>(IEnumerable<T> available)
+        {
+            List<T> availableList = available.ToList();
+            return Permutations(availableList.Select(t => Pair<bool, T>.Create(true, t)).ToArray(), availableList.Count);
+        }
+
+        private static IEnumerable<IEnumerable<T>> Permutations<T>(Pair<bool, T>[] available, int count)
+        {
+            if (count == 0)
+            {
+                yield return new List<T> { };
+            }
+
+            for (int i = 0; i < available.Length; i++)
+            {
+                if (available[i].Item1)
+                {
+                    available[i].Item1 = false;
+                    foreach (IEnumerable<T> recursiveResult in Permutations(available, count - 1))
+                    {
+                        yield return new List<T> { available[i].Item2 }.Concat(recursiveResult);
+                    }
+
+                    available[i].Item1 = true;
+                }
+            }
+        }
+
+        private class Pair<T, U>
+        {
+            public static Pair<T, U> Create(T item1, U item2)
+            {
+                return new Pair<T, U>(item1, item2);
+            }
+
+            private Pair(T item1, U item2)
+            {
+                this.Item1 = item1;
+                this.Item2 = item2;
+            }
+
+            public T Item1 { get; set; }
+
+            public U Item2 { get; set; }
+
+        }
     }
 }
